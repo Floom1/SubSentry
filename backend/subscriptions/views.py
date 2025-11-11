@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions, status
@@ -139,7 +140,7 @@ class CheckNotificationsView(APIView):
 
     def post(self, request):
         today = timezone.now().date()
-        notifications_count = 0
+        notifications_created = 0
 
         # Получаем все подписки пользователя
         subscriptions = Subscription.objects.filter(user=request.user)
@@ -147,19 +148,37 @@ class CheckNotificationsView(APIView):
         for subscription in subscriptions:
             days_until_payment = (subscription.next_payment_date - today).days
 
+            # Проверяем, нужно ли создать уведомление
             if 0 <= days_until_payment <= subscription.notification_days_before:
-                # Проверяем наличие уведомления
-                has_notification = Notification.objects.filter(
+                # Проверяем, нет ли уже созданного уведомления для этой подписки
+                existing_notification = Notification.objects.filter(
                     user=request.user,
                     subscription=subscription,
                     status='pending',
                     created_at__date=today
-                ).exists()
+                ).first()
 
-                if has_notification:
-                    notifications_count += 1
+                if not existing_notification:
+                    # Формируем сообщение
+                    message = (
+                        f"Напоминание: ваша подписка '{subscription.name}' "
+                        f"требует оплаты {subscription.next_payment_date.strftime('%d.%m.%Y')}. "
+                        f"Сумма: {subscription.price} руб."
+                    )
+
+                    # Создаем уведомление
+                    Notification.objects.create(
+                        user=request.user,
+                        subscription=subscription,
+                        message=message,
+                        status='pending'
+                    )
+                    notifications_created += 1
+
+                    # Сдвигаем дату платежа на месяц вперед (автоматически после оплаты)
+                    subscription.advance_payment_date()
 
         return Response({
-            'notifications_count': notifications_count,
-            'message': f'Найдено {notifications_count} уведомлений'
+            'notifications_created': notifications_created,
+            'message': f'Создано {notifications_created} новых уведомлений'
         })

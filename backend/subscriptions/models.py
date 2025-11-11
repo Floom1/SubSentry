@@ -1,3 +1,4 @@
+from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -47,6 +48,16 @@ class Subscription(models.Model):
         today = timezone.now().date()
         days_until_payment = (self.next_payment_date - today).days
         return 0 <= days_until_payment <= self.notification_days_before
+
+    def advance_payment_date(self):
+        """Сдвигает дату следующего платежа на месяц вперед"""
+        # Проверяем, что дата определена
+        if self.next_payment_date:
+            # Сдвигаем на 1 месяц
+            self.next_payment_date = self.next_payment_date + relativedelta(months=1)
+            self.save()
+            return True
+        return False
 
 
 class Notification(models.Model):

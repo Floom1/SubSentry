@@ -117,27 +117,26 @@ class NotificationSettingsFragment : Fragment() {
                 val response = RetrofitClient.apiService.checkNotifications()
 
                 if (response.isSuccessful) {
-                    val notificationsCount = response.body()?.notificationsCount ?: 0
+                    val notificationsCreated = response.body()?.notificationsCreated ?: 0
 
                     withContext(Dispatchers.Main) {
-                        if (notificationsCount > 0) {
+                        if (notificationsCreated > 0) {
                             Toast.makeText(
                                 requireContext(),
-                                "Найдено $notificationsCount уведомлений",
+                                "Обнаружено $notificationsCreated уведомлений",
                                 Toast.LENGTH_LONG
                             ).show()
 
-                            // Показываем уведомление
                             val manager = NotificationManager(requireContext())
                             manager.showNotification(
                                 id = System.currentTimeMillis().toInt(),
-                                title = "Сегодня нужно оплатить!",
-                                message = "Есть подписки для оплаты сегодня"
+                                title = "Новые уведомления",
+                                message = "Найдены подписки для оплаты"
                             )
                         } else {
                             Toast.makeText(
                                 requireContext(),
-                                "Сегодня нет платежей",
+                                "Нет новых уведомлений",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

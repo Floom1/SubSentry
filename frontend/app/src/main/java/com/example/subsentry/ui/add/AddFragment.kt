@@ -305,7 +305,7 @@ class AddFragment : Fragment() {
                 val todayDate = todayCalendar.time
 
                 // Теперь сравнение будет корректным
-                if (selectedDate.before(todayDate)) {
+                if (!selectedDate.after(todayDate)) {
                     binding.dateLayout.error = "Дата должна быть сегодня или позже"
                     return
                 }
@@ -322,7 +322,7 @@ class AddFragment : Fragment() {
             binding.notificationDaysLayout.error = "Введите число"
             return
         }
-        if (notificationDays < 1 || notificationDays > 30) {
+        if (notificationDays < 0 || notificationDays > 30) {
             binding.notificationDaysLayout.error = "Дней должно быть от 1 до 30"
             return
         } else {
