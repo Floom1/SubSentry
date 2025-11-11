@@ -1,0 +1,44 @@
+# Python environment
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+
+# Android Studio & Gradle artifacts
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+.idea/
+*.class
+*.jar
+*.apk
+*.dex
+*.aar
+*.so
+*.o
+*.obj
+*.a
+*.dylib
+*.dll
+*.exe
+*.bin
+
+# System files
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# User-specific files
+*.sublime-project
+*.sublime-workspace
+*.idea/

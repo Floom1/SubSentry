@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authFragment">
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.subsentry.ui.auth.AuthFragment"
+        android:label="Вход"
+        tools:layout="@layout/fragment_auth" />
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.subsentry.ui.auth.RegisterFragment"
+        android:label="Регистрация"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.subsentry.ui.main.MainFragment"
+        android:label="Главная"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.subsentry.ui.add.AddFragment"
+        android:label="Добавить"
+        tools:layout="@layout/fragment_add">
+
+        <argument
+            android:name="subscriptionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
+        <argument
+            android:name="isEditing"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.subsentry.ui.main.MainFragment"
+        android:label="Профиль"
+        tools:layout="@layout/fragment_main" />
+
+
+    <fragment
+        android:id="@+id/notificationSettingsFragment"
+        android:name="com.example.subsentry.ui.settings.NotificationSettingsFragment"
+        android:label="Настройки уведомлений"
+        tools:layout="@layout/fragment_notification_settings" />
+
+</navigation>

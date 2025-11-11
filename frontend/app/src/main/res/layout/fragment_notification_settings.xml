@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Включение/выключение уведомлений -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notificationsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/notificationsTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Уведомления о подписках"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/notificationsSwitch" />
+
+                <TextView
+                    android:id="@+id/notificationsDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Получать уведомления о предстоящих платежах"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/notificationsTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <Switch
+                    android:id="@+id/notificationsSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Интервал проверки -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/checkIntervalCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/notificationsCard">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/checkIntervalTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Интервал проверки"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/checkIntervalDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Проверять наличие новых уведомлений каждые X минут"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/checkIntervalTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/checkIntervalLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Минуты"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/checkIntervalDescription">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/checkIntervalInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:imeOptions="actionDone" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/demoModeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Для демонстрации: установите значение от 1 до 5 минут"
+                    android:textColor="#6200EE"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/checkIntervalLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Кнопка проверки -->
+        <Button
+            android:id="@+id/checkNowButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Проверить сейчас"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/checkIntervalCard" />
+
+        <!-- Информация -->
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Уведомления проверяются автоматически в фоне. Нажмите \'Проверить сейчас\', чтобы запустить проверку немедленно."
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/checkNowButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
