@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.subsentry.R
@@ -59,7 +60,14 @@ class AuthFragment : Fragment() {
         }
     }
 
+    private fun isFragmentActive(): Boolean {
+        return viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
+    }
+
     private fun validateAndLogin() {
+        if (!isFragmentActive()) {
+            return
+        }
         val username = binding.usernameInput.text.toString().trim()
         val password = binding.passwordInput.text.toString().trim()
 
@@ -81,7 +89,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun login(username: String, password: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.apiService.loginUser(
                     LoginRequest(username, password)
@@ -93,26 +101,36 @@ class AuthFragment : Fragment() {
 
                     if (user != null) {
                         withContext(Dispatchers.Main) {
-                            saveSession(user, cookies)
-                            navigateToMain()
+                            if (isFragmentActive()) {
+                                saveSession(user, cookies)
+                                navigateToMain()
+                            }
                         }
                     } else {
                         withContext(Dispatchers.Main) {
-                            showError("Ошибка при получении данных пользователя")
+                            if (isFragmentActive()) {
+                                showError("Ошибка при получении данных пользователя")
+                            }
                         }
                     }
                 } else {
                     withContext(Dispatchers.Main) {
-                        showError("Неверный никнейм или пароль")
+                        if (isFragmentActive()) {
+                            showError("Неверный никнейм или пароль")
+                        }
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    showError("Ошибка сети: ${e.message}")
+                    if (isFragmentActive()) {
+                        showError("Ошибка сети: ${e.message}")
+                    }
                 }
             } finally {
                 withContext(Dispatchers.Main) {
-                    binding.loginButton.isEnabled = true
+                    if (isFragmentActive()) {
+                        binding.loginButton.isEnabled = true
+                    }
                 }
             }
         }

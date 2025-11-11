@@ -43,7 +43,7 @@ class ProfileFragment : Fragment() {
 
         // Обработчик для кнопки выхода
         binding.logoutButton.setOnClickListener {
-            (activity as? MainActivity)?.logout()
+            (requireActivity() as MainActivity).logout()
         }
     }
 

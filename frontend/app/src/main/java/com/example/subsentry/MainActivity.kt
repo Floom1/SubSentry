@@ -48,13 +48,16 @@ class MainActivity : AppCompatActivity() {
 
         if (sessionManager.isLoggedIn() &&
             (navController.currentDestination?.id == R.id.authFragment ||
-                    navController.currentDestination?.id == R.id.registerFragment)) {
+                    navController.currentDestination?.id == R.id.registerFragment)
+        ) {
             navController.navigate(R.id.mainFragment)
         }
     }
 
     fun logout() {
         sessionManager.logout()
-        navController.navigate(R.id.authFragment)
+        if (::navController.isInitialized) {
+            navController.navigate(R.id.authFragment)
+        }
     }
 }

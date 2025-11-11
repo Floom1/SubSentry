@@ -77,6 +77,7 @@ class RegisterFragment : Fragment() {
 
         if (!isValid) return
 
+        // Очистка ошибок и блокировка кнопки
         binding.emailLayout.error = null
         binding.usernameLayout.error = null
         binding.passwordLayout.error = null
@@ -87,7 +88,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun register(email: String, username: String, password: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        // Используем viewLifecycleOwner.lifecycleScope для корректного управления жизненным циклом
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.apiService.registerUser(
                     RegisterRequest(username, email, password)
@@ -95,20 +97,26 @@ class RegisterFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
+                        // Проверяем, активен ли фрагмент перед обновлением UI
+                        if (!isAdded) return@withContext
                         Toast.makeText(requireContext(), "Регистрация успешна! Войдите в аккаунт", Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.authFragment)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
+                        if (!isAdded) return@withContext
                         showError("Ошибка регистрации: ${response.message()}")
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    if (!isAdded) return@withContext
                     showError("Ошибка сети: ${e.message}")
                 }
             } finally {
                 withContext(Dispatchers.Main) {
+                    // Проверяем активность перед обновлением UI
+                    if (!isAdded) return@withContext
                     binding.registerButton.isEnabled = true
                 }
             }
@@ -117,6 +125,11 @@ class RegisterFragment : Fragment() {
 
     private fun showError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    // Добавляем проверку активности фрагмента
+    private fun isFragmentActive(): Boolean {
+        return view != null && isAdded && !isDetached && !isStateSaved
     }
 
     override fun onDestroyView() {
