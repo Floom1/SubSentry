@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions, status
@@ -139,7 +140,7 @@ class CheckNotificationsView(APIView):
         Проверить предстоящие платежи и создать уведомления если нужно
         Вызывается Android приложением при запуске
         """
-        today = date.today()
+        today = datetime.date.today()  # Используем datetime.date.today()
         notifications_created = 0
 
         # Получаем все подписки пользователя

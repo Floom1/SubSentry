@@ -42,9 +42,9 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.subsentry.ui.main.MainFragment"
+        android:name="com.example.subsentry.ui.profile.ProfileFragment"
         android:label="Профиль"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_profile" />
 
 
     <fragment
