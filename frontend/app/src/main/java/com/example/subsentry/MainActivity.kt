@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.subsentry.databinding.ActivityMainBinding
 import com.example.subsentry.utils.SessionManager
+import com.example.subsentry.work.NotificationWorker
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        if (sessionManager.isLoggedIn()) {
+//            NotificationWorker.scheduleWork(this) // Статический вызов
+//        }
+
 
         sessionManager = SessionManager(this)
 

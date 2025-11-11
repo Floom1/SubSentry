@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.subsentry.R
 import com.example.subsentry.api.RetrofitClient
 import com.example.subsentry.databinding.FragmentNotificationSettingsBinding
+import com.example.subsentry.utils.NotificationManager
 import com.example.subsentry.utils.NotificationPreferences
 import com.example.subsentry.utils.SessionManager
 import kotlinx.coroutines.CoroutineScope
@@ -116,9 +117,30 @@ class NotificationSettingsFragment : Fragment() {
                 val response = RetrofitClient.apiService.checkNotifications()
 
                 if (response.isSuccessful) {
+                    val notificationsCount = response.body()?.notificationsCount ?: 0
+
                     withContext(Dispatchers.Main) {
-                        val message = "Проверка завершена. Создано ${response.body()?.notificationsCreated} уведомлений"
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+                        if (notificationsCount > 0) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Найдено $notificationsCount уведомлений",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            // Показываем уведомление
+                            val manager = NotificationManager(requireContext())
+                            manager.showNotification(
+                                id = System.currentTimeMillis().toInt(),
+                                title = "Сегодня нужно оплатить!",
+                                message = "Есть подписки для оплаты сегодня"
+                            )
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Сегодня нет платежей",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {

@@ -291,14 +291,22 @@ class AddFragment : Fragment() {
         } else {
             binding.dateLayout.error = null
 
-            // Проверка, что дата не раньше сегодняшней
+            // Проверка, что дата не раньше сегодняшней (исправление)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
                 val selectedDate = dateFormat.parse(date)
-                val today = Calendar.getInstance().time
 
-                if (selectedDate.before(today)) {
-                    binding.dateLayout.error = "Дата должна быть не раньше сегодняшней"
+                // Создаем "сегодняшнюю" дату без времени (только год, месяц, день)
+                val todayCalendar = Calendar.getInstance()
+                todayCalendar.set(Calendar.HOUR_OF_DAY, 0)
+                todayCalendar.set(Calendar.MINUTE, 0)
+                todayCalendar.set(Calendar.SECOND, 0)
+                todayCalendar.set(Calendar.MILLISECOND, 0)
+                val todayDate = todayCalendar.time
+
+                // Теперь сравнение будет корректным
+                if (selectedDate.before(todayDate)) {
+                    binding.dateLayout.error = "Дата должна быть сегодня или позже"
                     return
                 }
             } catch (e: Exception) {

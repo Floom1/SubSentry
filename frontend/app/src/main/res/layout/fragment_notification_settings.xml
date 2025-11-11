@@ -69,7 +69,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/checkIntervalTitle"
@@ -78,34 +79,34 @@
                     android:text="Интервал проверки"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/checkIntervalDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Проверять наличие новых уведомлений каждые X минут"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/checkIntervalTitle"
+                    android:text="Проверять наличие новых уведомлений каждые X минут"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/checkIntervalTitle" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/checkIntervalLayout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Минуты"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_marginTop="16dp"
+                    android:hint="Минуты"
                     app:layout_constraintTop_toBottomOf="@id/checkIntervalDescription">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/checkIntervalInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:imeOptions="actionDone" />
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,9 +114,9 @@
                     android:id="@+id/demoModeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Для демонстрации: установите значение от 1 до 5 минут"
                     android:textColor="#6200EE"
-                    android:layout_marginTop="8dp"
                     app:layout_constraintTop_toBottomOf="@id/checkIntervalLayout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -136,8 +137,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Уведомления проверяются автоматически в фоне. Нажмите \'Проверить сейчас\', чтобы запустить проверку немедленно."
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/checkNowButton" />
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/checkNowButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
