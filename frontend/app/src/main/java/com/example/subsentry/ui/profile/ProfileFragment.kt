@@ -38,7 +38,7 @@ class ProfileFragment : Fragment() {
     private fun setupUI() {
         // Обработчик для кнопки настроек уведомлений
         binding.notificationsSettingsButton.setOnClickListener {
-            findNavController().navigate(R.id.notificationSettingsFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_notificationSettingsFragment)
         }
 
         // Обработчик для кнопки выхода

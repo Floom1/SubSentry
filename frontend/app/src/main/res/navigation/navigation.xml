@@ -44,13 +44,20 @@
         android:id="@+id/profileFragment"
         android:name="com.example.subsentry.ui.profile.ProfileFragment"
         android:label="Профиль"
-        tools:layout="@layout/fragment_profile" />
-
+        tools:layout="@layout/fragment_profile" >
+    <action
+        android:id="@+id/action_profileFragment_to_notificationSettingsFragment"
+        app:destination="@id/notificationSettingsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/notificationSettingsFragment"
         android:name="com.example.subsentry.ui.settings.NotificationSettingsFragment"
         android:label="Настройки уведомлений"
-        tools:layout="@layout/fragment_notification_settings" />
+        tools:layout="@layout/fragment_notification_settings" >
+    <action
+        android:id="@+id/action_notificationSettingsFragment_to_profileFragment"
+        app:destination="@id/profileFragment" />
+    </fragment>
 
 </navigation>

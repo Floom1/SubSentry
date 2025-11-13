@@ -10,6 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Toolbar для кнопки назад -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_bg"
+            android:elevation="4dp"
+            app:titleTextColor="@color/black"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Настройки уведомлений"
+            app:navigationIcon="@drawable/ic_arrow_back_black" />
+
         <!-- Включение/выключение уведомлений -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/notificationsCard"
@@ -18,7 +31,8 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -55,6 +69,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Остальные элементы остаются без изменений -->
 
         <!-- Интервал проверки -->
         <com.google.android.material.card.MaterialCardView
